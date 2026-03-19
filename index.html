@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flat 225 — Nell Gwynn House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #111111;
+    --bg:     #fafaf8;
+    --warm:   #f5f2ec;
+    --gold:   #b8860b;
+    --gold-lt:#d4a017;
+    --mid:    #555555;
+    --light:  #888888;
+    --border: #e0ddd8;
+    --nav-bg: #111111;
+    --white:  #ffffff;
+    --green:  #2d6a4f;
+    --amber:  #b8860b;
+    --red:    #9b2226;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ─────────────────────────────────────────────────────────── */
+  nav {
+    background: var(--nav-bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 56px;
+  }
+  .nav-brand {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-brand span { color: var(--gold); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+  /* ── HERO ─────────────────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    opacity: 0.62;
+    display: block;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%);
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 52px;
+    left: 52px;
+    right: 52px;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em;
+  }
+  .hero-sub span { margin: 0 8px; opacity: 0.4; }
+
+  /* ── META STRIP ───────────────────────────────────────────────────── */
+  .meta-strip {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .meta-item {
+    padding: 22px 32px;
+    border-right: 1px solid var(--border);
+  }
+  .meta-item:last-child { border-right: none; }
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .meta-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .status-pill::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .status-pending { color: var(--amber); }
+  .status-complete { color: var(--green); }
+
+  /* ── LAYOUT ───────────────────────────────────────────────────────── */
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ── INTRO ────────────────────────────────────────────────────────── */
+  .intro {
+    padding: 60px 0 48px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 64px;
+    align-items: start;
+  }
+  .intro-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .intro-text {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.75;
+  }
+  .intro-text p + p { margin-top: 14px; }
+
+  .status-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 28px;
+  }
+  .status-card-title {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .status-row:last-child { border-bottom: none; }
+  .status-row-label { color: var(--mid); }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+  .badge-pending  { background: #fef3c7; color: #92400e; }
+  .badge-quoted   { background: #dbeafe; color: #1e40af; }
+  .badge-complete { background: #d1fae5; color: #065f46; }
+  .badge-optional { background: #f3f4f6; color: #374151; }
+
+  /* ── SECTIONS ─────────────────────────────────────────────────────── */
+  .section-block {
+    padding: 56px 0;
+    border-top: 1px solid var(--border);
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    color: var(--border);
+    line-height: 1;
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+  .section-info {}
+  .section-kicker {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  /* ── QUOTE TABLE ──────────────────────────────────────────────────── */
+  .quote-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-bottom: 28px;
+  }
+  .quote-table thead tr {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .quote-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .quote-table th.right { text-align: right; }
+  .quote-table tbody tr { border-bottom: 1px solid var(--border); }
+  .quote-table tbody tr:nth-child(even) { background: var(--warm); }
+  .quote-table td { padding: 11px 14px; color: var(--ink); vertical-align: top; }
+  .quote-table td.right { text-align: right; font-weight: 500; white-space: nowrap; }
+  .quote-table td.light { color: var(--light); font-size: 12px; }
+  .quote-table .sub-row td {
+    background: #f0ede8;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .quote-table .section-row td {
+    background: var(--ink);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    padding: 8px 14px;
+  }
+
+  /* ── TOTALS BOX ───────────────────────────────────────────────────── */
+  .totals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .totals-box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .totals-box-title {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .totals-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .totals-row:last-child { border-bottom: none; }
+  .totals-row.bold { font-weight: 600; }
+  .totals-row.discount { color: #9b2226; }
+  .totals-row.final {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 2px solid var(--ink);
+    border-bottom: none;
+  }
+
+  /* ── PHOTO GRID ───────────────────────────────────────────────────── */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .photo-grid.two { grid-template-columns: repeat(2, 1fr); }
+  .photo-item { position: relative; overflow: hidden; background: #e5e0d8; }
+  .photo-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .photo-item:hover img { transform: scale(1.03); }
+  .photo-caption {
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--light);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: none;
+    line-height: 1.4;
+  }
+
+  /* ── ACTIVITY ─────────────────────────────────────────────────────── */
+  .activity-list { display: flex; flex-direction: column; gap: 0; }
+  .activity-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-date {
+    font-size: 12px;
+    color: var(--light);
+    font-weight: 500;
+    padding-top: 2px;
+  }
+  .activity-body {}
+  .activity-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .activity-desc { font-size: 13.5px; color: var(--mid); line-height: 1.65; }
+
+  /* ── TERMS ────────────────────────────────────────────────────────── */
+  .terms-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .terms-list li {
+    font-size: 13.5px;
+    color: var(--mid);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .terms-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ── CONTACT / FOOTER ─────────────────────────────────────────────── */
+  .contact-strip {
+    background: var(--ink);
+    padding: 52px 0;
+    margin-top: 0;
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: center;
+  }
+  .contact-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+  .contact-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .contact-role {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+  .contact-details { display: flex; flex-direction: column; gap: 6px; }
+  .contact-details a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+  .contact-details a:hover { color: var(--white); }
+  .contact-monogram {
+    width: 72px;
+    height: 72px;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--gold);
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+  footer {
+    background: #0a0a0a;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero-content { left: 24px; right: 24px; bottom: 32px; }
+    .meta-strip { grid-template-columns: 1fr 1fr; }
+    .meta-item { padding: 16px 20px; }
+    .container { padding: 0 20px; }
+    .intro { grid-template-columns: 1fr; gap: 32px; }
+    .photo-grid { grid-template-columns: 1fr 1fr; }
+    .photo-grid.two { grid-template-columns: 1fr; }
+    .totals-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .contact-monogram { display: none; }
+    .activity-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#"><span>ASA</span> Electrical Ltd</a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="#quotation">Quotation</a></li>
+    <li><a href="#photography">Site Photos</a></li>
+    <li><a href="#terms">Terms</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <img class="hero-img" src="nell-gwynn-house.jpg" alt="Nell Gwynn House, Chelsea">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Quotation &nbsp;·&nbsp; Maintenance &amp; Improvement Works</p>
+    <h1 class="hero-title">Flat 225 <em>Nell Gwynn House</em></h1>
+    <p class="hero-sub">Sloane Avenue <span>·</span> Chelsea <span>·</span> London SW3</p>
+  </div>
+</div>
+
+<!-- META STRIP -->
+<div class="meta-strip">
+  <div class="meta-item">
+    <div class="meta-label">Contractor</div>
+    <div class="meta-value">ASA Electrical Ltd</div>
+  </div>
+  <div class="meta-item">
+    <div class="meta-label">Client</div>
+    <div class="meta-value">George Boutari / Josette</div>
+  </div>
+  <div class="meta-item">
+    <div class="meta-label">Status</div>
+    <div class="meta-value">
+      <span class="status-pill status-pending">Quotation Issued</span>
+    </div>
+  </div>
+  <div class="meta-item">
+    <div class="meta-label">Quote Date</div>
+    <div class="meta-value">18 March 2026</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="container">
+  <div class="intro">
+    <div>
+      <p class="intro-label">Project Overview</p>
+      <div class="intro-text">
+        <p>This page provides a complete overview of the proposed maintenance, refresh and improvement works at Flat 225, Nell Gwynn House. All scope, pricing and documentation are set out below for your reference.</p>
+        <p>Works are aimed at restoring the flat to a high lettable standard. The quotation covers decoration throughout, bathroom remediation and re-grouting, kitchen worktop and sink replacement, shower wall remediation with a new external thermostatic system, and a new dishwasher installation.</p>
+        <p>A <strong>5% goodwill discount</strong> has been applied to the final invoice total. Please confirm your preferred option for Item 6 (longer worktop) in writing to agree the full scope.</p>
+      </div>
+    </div>
+    <div>
+      <div class="status-card">
+        <div class="status-card-title">Scope at a Glance</div>
+        <div class="status-row">
+          <span class="status-row-label">Full Flat Decoration</span>
+          <span class="badge badge-quoted">Quoted</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-label">Bathroom Re-grouting</span>
+          <span class="badge badge-quoted">Quoted</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-label">Shower Wall Remediation</span>
+          <span class="badge badge-quoted">Quoted</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-label">Kitchen Worktop &amp; Sink</span>
+          <span class="badge badge-quoted">Quoted</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-label">Longer Worktop (Option B)</span>
+          <span class="badge badge-optional">Optional</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-label">New Dishwasher</span>
+          <span class="badge badge-quoted">Quoted</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-label">5% Discount Applied</span>
+          <span class="badge badge-complete">Yes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 01 — QUOTATION -->
+<div class="container" id="quotation">
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-info">
+        <div class="section-kicker">Full Scope</div>
+        <div class="section-title">Quotation — Ref: ASA-2026-225NGH (Revised)</div>
+      </div>
+    </div>
+
+    <table class="quote-table">
+      <thead>
+        <tr>
+          <th style="width:44px">No.</th>
+          <th>Description</th>
+          <th>Notes</th>
+          <th class="right" style="width:130px">Price (ex. VAT)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Section A -->
+        <tr class="section-row"><td colspan="4">Section A — Decoration &amp; General Works</td></tr>
+        <tr>
+          <td>1</td>
+          <td><strong>Full Flat Decoration – Walls &amp; Ceilings</strong><br><span style="font-size:12px;color:#777">Incl. crack filling, water-damage prep, two coats white matt emulsion throughout. BS 6150:2022.</span></td>
+          <td class="light">All materials included</td>
+          <td class="right">£2,850.00</td>
+        </tr>
+        <!-- Section B -->
+        <tr class="section-row"><td colspan="4">Section B — Bathroom Works</td></tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Re-grouting – Shower Area</strong><br><span style="font-size:12px;color:#777">Rake out, waterproof regrout, seal and finish. BS 5385.</span></td>
+          <td class="light">All materials included</td>
+          <td class="right">£480.00</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Re-grouting – Sink &amp; Bath Surround</strong><br><span style="font-size:12px;color:#777">Rake out, waterproof regrout, seal and finish. BS 5385.</span></td>
+          <td class="light">All materials included</td>
+          <td class="right">£430.00</td>
+        </tr>
+        <tr>
+          <td>4a</td>
+          <td><strong>New External Grohe Thermostatic Shower System</strong><br><span style="font-size:12px;color:#777">Grohe surface-mounted system, supplied &amp; fitted.</span></td>
+          <td class="light">Grohe surface-mounted</td>
+          <td class="right">£450.00</td>
+        </tr>
+        <tr>
+          <td>4b</td>
+          <td><strong>Building Works &amp; Water-Tanking Preparation</strong><br><span style="font-size:12px;color:#777">Strip, tank, prepare substrate for tiling.</span></td>
+          <td class="light">Strip, tank, prepare</td>
+          <td class="right">£350.00</td>
+        </tr>
+        <tr>
+          <td>4c</td>
+          <td><strong>Re-Tiling – Thermostatic Valve Wall</strong><br><span style="font-size:12px;color:#777">Supply &amp; fix white tiles, grout, seal.</span></td>
+          <td class="light">White tiles throughout</td>
+          <td class="right">£700.00</td>
+        </tr>
+        <tr class="sub-row">
+          <td></td>
+          <td colspan="2">Item 4 Sub-total</td>
+          <td class="right">£1,500.00</td>
+        </tr>
+        <!-- Section C -->
+        <tr class="section-row"><td colspan="4">Section C — Kitchen Works</td></tr>
+        <tr>
+          <td>5a</td>
+          <td><strong>Black Granite Worktop – Window Section (1,250mm)</strong><br><span style="font-size:12px;color:#777">Supply &amp; fit incl. cutting &amp; sealing.</span></td>
+          <td class="light">All materials included</td>
+          <td class="right">£580.00</td>
+        </tr>
+        <tr>
+          <td>5b</td>
+          <td><strong>New 450×450mm Stainless Steel Sink – Supply &amp; Fit</strong><br><span style="font-size:12px;color:#777">Incl. waste &amp; plumbing connections.</span></td>
+          <td class="light">Incl. all connections</td>
+          <td class="right">£320.00</td>
+        </tr>
+        <tr>
+          <td>5c</td>
+          <td><strong>New Grohe Tap – Supply &amp; Fit</strong><br><span style="font-size:12px;color:#777">Incl. all connections.</span></td>
+          <td class="light">Incl. all connections</td>
+          <td class="right">£280.00</td>
+        </tr>
+        <tr class="sub-row">
+          <td></td>
+          <td colspan="2">Item 5 Sub-total</td>
+          <td class="right">£1,180.00</td>
+        </tr>
+        <tr>
+          <td>6a</td>
+          <td><strong>Longer Worktop – Leave as-is</strong><br><span style="font-size:12px;color:#777">No works required. Existing worktop retained.</span></td>
+          <td class="light">Option A</td>
+          <td class="right">£0.00</td>
+        </tr>
+        <tr>
+          <td>6b</td>
+          <td><strong>Longer Worktop – Replace to Match (1,850mm)</strong><br><span style="font-size:12px;color:#777">Supply &amp; fit black granite to match Item 5. Cutting &amp; sealing included.</span></td>
+          <td class="light">Option B (optional)</td>
+          <td class="right">£1,850.00</td>
+        </tr>
+        <tr>
+          <td>7a</td>
+          <td><strong>Dishwasher Unit (450mm Wide) – Supplied</strong><br><span style="font-size:12px;color:#777">Client-approved unit.</span></td>
+          <td class="light">450mm width</td>
+          <td class="right">£300.00</td>
+        </tr>
+        <tr>
+          <td>7b</td>
+          <td><strong>Remove Existing Drawers &amp; Fit Dishwasher</strong><br><span style="font-size:12px;color:#777">Labour to remove drawers, install dishwasher.</span></td>
+          <td class="light">Labour &amp; install</td>
+          <td class="right">£280.00</td>
+        </tr>
+        <tr>
+          <td>7c</td>
+          <td><strong>Additional Materials (Plumbing, Waste, Fixings)</strong><br><span style="font-size:12px;color:#777">All connection materials included.</span></td>
+          <td class="light">All materials</td>
+          <td class="right">£120.00</td>
+        </tr>
+        <tr class="sub-row">
+          <td></td>
+          <td colspan="2">Item 7 Sub-total</td>
+          <td class="right">£700.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- TOTALS -->
+    <div class="totals-grid">
+      <!-- Option 6a -->
+      <div class="totals-box">
+        <div class="totals-box-title">Summary — Option 6a (Leave Longer Worktop)</div>
+        <div class="totals-row"><span>Items 1–3 (Decoration &amp; Bathroom)</span><span>£3,760.00</span></div>
+        <div class="totals-row"><span>Item 4 – Shower Remediation</span><span>£1,500.00</span></div>
+        <div class="totals-row"><span>Item 5 – Worktop, Sink &amp; Tap</span><span>£1,180.00</span></div>
+        <div class="totals-row"><span>Item 6a – Worktop (leave as-is)</span><span>£0.00</span></div>
+        <div class="totals-row"><span>Item 7 – Dishwasher</span><span>£700.00</span></div>
+        <div class="totals-row bold"><span>Subtotal (ex. VAT)</span><span>£7,140.00</span></div>
+        <div class="totals-row"><span>VAT @ 20%</span><span>£1,428.00</span></div>
+        <div class="totals-row bold"><span>Total (inc. VAT)</span><span>£8,568.00</span></div>
+        <div class="totals-row discount"><span>5% Discount</span><span>− £428.40</span></div>
+        <div class="totals-row final"><span>Final Total</span><span>£8,139.60</span></div>
+      </div>
+      <!-- Option 6b -->
+      <div class="totals-box">
+        <div class="totals-box-title">Summary — Option 6b (Replace Longer Worktop)</div>
+        <div class="totals-row"><span>Items 1–3 (Decoration &amp; Bathroom)</span><span>£3,760.00</span></div>
+        <div class="totals-row"><span>Item 4 – Shower Remediation</span><span>£1,500.00</span></div>
+        <div class="totals-row"><span>Item 5 – Worktop, Sink &amp; Tap</span><span>£1,180.00</span></div>
+        <div class="totals-row"><span>Item 6b – Replace Longer Worktop</span><span>£1,850.00</span></div>
+        <div class="totals-row"><span>Item 7 – Dishwasher</span><span>£700.00</span></div>
+        <div class="totals-row bold"><span>Subtotal (ex. VAT)</span><span>£8,990.00</span></div>
+        <div class="totals-row"><span>VAT @ 20%</span><span>£1,798.00</span></div>
+        <div class="totals-row bold"><span>Total (inc. VAT)</span><span>£10,788.00</span></div>
+        <div class="totals-row discount"><span>5% Discount</span><span>− £539.40</span></div>
+        <div class="totals-row final"><span>Final Total</span><span>£10,248.60</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 02 — PHOTOGRAPHY -->
+<div class="container" id="photography">
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-info">
+        <div class="section-kicker">Survey Photography</div>
+        <div class="section-title">Site Condition — Pre-Works</div>
+      </div>
+    </div>
+
+    <p style="font-size:13.5px;color:var(--mid);margin-bottom:28px;max-width:640px;">Photography taken during the survey visit, documenting existing conditions throughout the flat. All areas referenced in the quotation are covered below.</p>
+
+    <!-- Living Room -->
+    <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;">Living Room — Survey Condition</p>
+    <div class="photo-grid">
+      <div class="photo-item">
+        <img src="IMG_2578.JPG" alt="Living room view 1">
+        <div class="photo-caption">Living room — dining area and lounge. Walls and ceilings to receive two coats white matt emulsion. BS 6150:2022.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2579.JPG" alt="Living room view 2">
+        <div class="photo-caption">Living room — second elevation showing TV wall and lounge area. Full redecoration included.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2577.JPG" alt="Living room view 3">
+        <div class="photo-caption">Living room — third elevation. All surfaces to be prepared, filled and painted throughout.</div>
+      </div>
+    </div>
+
+    <!-- Bedroom -->
+    <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;margin-top:32px;">Bedroom — Survey Condition</p>
+    <div class="photo-grid two">
+      <div class="photo-item">
+        <img src="IMG_2568.JPG" alt="Bedroom view 1">
+        <div class="photo-caption">Bedroom — decoration throughout, crack filling and surface preparation included.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2569.JPG" alt="Bedroom view 2">
+        <div class="photo-caption">Bedroom — second elevation showing wardrobe and en-suite access. Full redecoration included.</div>
+      </div>
+    </div>
+
+    <!-- Hallway & Kitchen -->
+    <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;margin-top:32px;">Hallway &amp; Kitchen — Survey Condition</p>
+    <div class="photo-grid">
+      <div class="photo-item">
+        <img src="IMG_2573.JPG" alt="Hallway">
+        <div class="photo-caption">Hallway — prominent crack near entrance door to be filled; full redecoration included.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2574.JPG" alt="Kitchen overview">
+        <div class="photo-caption">Kitchen — overview showing white units and dark granite worktops. Window worktop and sink area to be replaced.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2575.JPG" alt="Kitchen view 2">
+        <div class="photo-caption">Kitchen — longer worktop run (1,850mm). Option A: leave as-is; Option B: replace to match new black granite.</div>
+      </div>
+    </div>
+    <div class="photo-grid" style="margin-top:12px;">
+      <div class="photo-item">
+        <img src="IMG_2744_2.JPG" alt="Sink measurement">
+        <div class="photo-caption">Existing composite sink — measured for replacement. New 450×450mm stainless steel sink to be fitted with new Grohe tap.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2745_2.JPG" alt="Kitchen sink area">
+        <div class="photo-caption">Window worktop and sink — significant water damage and staining. Black granite replacement recommended.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2746_2.JPG" alt="Kitchen worktop and washing machine">
+        <div class="photo-caption">Longer worktop run with washing machine position — drawer unit to be removed to accommodate new dishwasher (Item 7).</div>
+      </div>
+    </div>
+    <div class="photo-grid two" style="margin-top:12px;">
+      <div class="photo-item">
+        <img src="IMG_2747_2.JPG" alt="Kitchen worktop detail">
+        <div class="photo-caption">Longer worktop run — detail showing existing granite surface condition and drawer unit earmarked for removal.</div>
+      </div>
+    </div>
+
+    <!-- Bathroom -->
+    <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;margin-top:32px;">Bathroom — Survey Condition</p>
+    <div class="photo-grid">
+      <div class="photo-item">
+        <img src="IMG_2564.JPG" alt="Bathroom overview">
+        <div class="photo-caption">Bathroom overview — shower enclosure, sink, bath and floor tiles. Grout deterioration throughout.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2565.JPG" alt="Bath surround and towel rail">
+        <div class="photo-caption">Bath surround and heated towel rail — tile grout deteriorating, waterproofing compromised.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2566.JPG" alt="Bathroom ceiling">
+        <div class="photo-caption">Bathroom ceiling — water-damaged areas above window require scraping back and stabilising before decoration.</div>
+      </div>
+    </div>
+    <div class="photo-grid" style="margin-top:12px;">
+      <div class="photo-item">
+        <img src="IMG_2748_2.JPG" alt="Shower valve wall">
+        <div class="photo-caption">Thermostatic valve wall — tiles lifting, concealed valve at risk. Full remediation, water-tanking and re-tiling recommended (Item 4).</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2749_2.JPG" alt="Sink area">
+        <div class="photo-caption">Sink surround — grout deteriorating around sink and wall tiles. Re-grouting included (Item 3).</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2567.JPG" alt="Bathroom entrance">
+        <div class="photo-caption">Bathroom entrance and shower wall — access point showing thermostatic valve location and tile condition.</div>
+      </div>
+    </div>
+
+    <!-- Defects & Cracks -->
+    <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;margin-top:32px;">Defects &amp; Decoration — Survey Detail</p>
+    <div class="photo-grid">
+      <div class="photo-item">
+        <img src="IMG_2750_2.JPG" alt="Water damaged ceiling above window">
+        <div class="photo-caption">Ceiling above bathroom window — paint flaking, water damage visible. To be scraped back, stabilised and repainted.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2751_2.JPG" alt="Water damage ceiling detail">
+        <div class="photo-caption">Ceiling water damage — close detail showing extent of flaking. Preparation and two-coat emulsion throughout.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2752_2.JPG" alt="Long vertical crack beside window">
+        <div class="photo-caption">Long vertical crack beside bathroom window — to be filled and made good before decoration.</div>
+      </div>
+    </div>
+    <div class="photo-grid two" style="margin-top:12px;">
+      <div class="photo-item">
+        <img src="IMG_2753_2.JPG" alt="Wall crack detail">
+        <div class="photo-caption">Wall crack detail — hairline cracking at wall/tile junction. All cracks to be filled and surfaces prepared prior to painting.</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG_2754_2.JPG" alt="Further crack detail">
+        <div class="photo-caption">Additional crack detail — imperfections throughout to be addressed as part of full flat decoration (Item 1).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 03 — SCOPE NOTES -->
+<div class="container">
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-info">
+        <div class="section-kicker">Scope Notes</div>
+        <div class="section-title">Key Items &amp; Client Actions</div>
+      </div>
+    </div>
+
+    <div class="activity-list">
+      <div class="activity-item">
+        <div class="activity-date">Item 6 — Decision Required</div>
+        <div class="activity-body">
+          <div class="activity-title">Longer Worktop: Confirm Option A or Option B</div>
+          <div class="activity-desc">The longer worktop run (1,850mm) can be left in its current condition (Option A — no additional cost) or replaced to match the new black granite worktop in Item 5 (Option B — £1,850 ex. VAT). Please confirm your preference in writing to finalise the scope. This affects the total quoted price.</div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-date">Item 4 — Shower Remediation</div>
+        <div class="activity-body">
+          <div class="activity-title">Shower Wall Tiles — History of Leaks, Urgent Remediation Recommended</div>
+          <div class="activity-desc">Tiles on the thermostatic valve wall are coming away from the substrate and were not installed correctly. To prevent further water ingress to the flat below, we recommend full remediation: strip tiles, water-tank the substrate, re-tile with white tiles, and install a new surface-mounted Grohe thermostatic shower system to eliminate the concealed valve risk point.</div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-date">Quotation Ref</div>
+        <div class="activity-body">
+          <div class="activity-title">ASA-2026-225NGH (Revised) — Valid 30 Days from 18 March 2026</div>
+          <div class="activity-desc">This quotation supersedes any previous version and is valid for 30 days from the date of issue. A 5% goodwill discount has been applied to the final invoice total inclusive of VAT. All prices are shown exclusive of VAT unless stated otherwise.</div>
+        </div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-date">Works Programme</div>
+        <div class="activity-body">
+          <div class="activity-title">All Works Carried Out During Normal Hours</div>
+          <div class="activity-desc">Works will be carried out Monday–Friday, 8am–5pm, unless otherwise agreed. Any additional works identified on site will be quoted separately and agreed in writing before proceeding. Payment due within 14 days of completion — bank transfer, cash or cheque accepted.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 04 — TERMS -->
+<div class="container" id="terms">
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-info">
+        <div class="section-kicker">Reference</div>
+        <div class="section-title">Terms &amp; Conditions</div>
+      </div>
+    </div>
+    <ul class="terms-list">
+      <li>This quotation is valid for 30 days from the date of issue (18 March 2026).</li>
+      <li>All materials are included in the prices above unless otherwise stated.</li>
+      <li>Works will be carried out during normal working hours (Monday–Friday, 8am–5pm) unless agreed otherwise.</li>
+      <li>Any additional works identified on site will be quoted separately and agreed in writing before proceeding.</li>
+      <li>Payment is due within 14 days of completion. Accepted by bank transfer, cash or cheque.</li>
+      <li>Decoration works carried out to BS 6150:2022 standards. Tiling works to BS 5385.</li>
+      <li>ASA Electrical Ltd holds full Public Liability Insurance of £5,000,000.</li>
+      <li>Item 6: Please confirm Option A (leave as-is) or Option B (replace to match) in writing to confirm scope.</li>
+      <li>A 5% discount has been applied to the final invoice total (inc. VAT) as a goodwill gesture.</li>
+    </ul>
+
+    <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+      <div>
+        <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--light);margin-bottom:16px;font-weight:500;">Client Acceptance</p>
+        <p style="font-size:13px;color:var(--mid);margin-bottom:24px;line-height:1.6;">By signing below, the client confirms acceptance of this quotation and authorises ASA Electrical Ltd to proceed with the works as described.</p>
+        <p style="font-size:13px;color:var(--mid);">Signature: ____________________________</p>
+        <p style="font-size:13px;color:var(--mid);margin-top:12px;">Date: ____________________________</p>
+      </div>
+      <div>
+        <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--light);margin-bottom:16px;font-weight:500;">Option Confirmation</p>
+        <p style="font-size:13px;color:var(--mid);margin-bottom:16px;">Please confirm your preferred option for Item 6:</p>
+        <p style="font-size:13px;color:var(--mid);margin-bottom:10px;">☐ &nbsp; Option A — Leave longer worktop as-is (no additional cost)</p>
+        <p style="font-size:13px;color:var(--mid);">☐ &nbsp; Option B — Replace longer worktop to match black granite (+£1,850 ex. VAT)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-strip">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <p class="contact-name">Adivalter Sfalsin</p>
+        <p class="contact-role">Site Manager &nbsp;·&nbsp; ASA Electrical Ltd</p>
+        <p class="contact-text">Please do not hesitate to contact me directly should you have any questions or wish to discuss any aspect of the quotation. I am available at the details opposite and happy to arrange a further site visit if required.</p>
+        <div class="contact-details" style="margin-top:20px;">
+          <a href="tel:07886546386">Mob: 0788 654 6386</a>
+          <a href="/cdn-cgi/l/email-protection#553426343039303621273c3634391538307b363a38"><span class="__cf_email__" data-cfemail="8eeffdefebe2ebedfafce7edefe2cee3eba0ede1e3">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="contact-monogram">AS</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>ASA Electrical Ltd &nbsp;·&nbsp; Reg: 05815594 &nbsp;·&nbsp; VAT: GB477934240 &nbsp;·&nbsp; Working in partnership with Chelsea Electrical Ltd (NICEIC Approved) &nb
